@@ -1,14 +1,5 @@
 # TexPark_Web
 
-<p align="center">
-  <a href="https://park.mail.ru/">
-    <img
-      src="files/img/tpark_logo.jpg"
-      width="400"
-    />
-  </a>
-</p>
-
 ## Технопарк Mail.ru / 1й семестр / Web-технологии
 - Техническое задание ([Markdown](files/markdown/technical_details.md),<!-- [HTML](files/html/technical_details.html),--> [PDF](files/pdf/technical_details.pdf))
 - Домашнее задание 1 ([Markdown](files/markdown/task-1.md),<!-- [HTML](files/html/task-1.html),--> [PDF](files/pdf/task-1.pdf))
