@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <article>
+        <h2 class="mb-3">New Question</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <table class="mb-3 login-table">{{ form.as_table }}</table>
+            <input class="mb-3" type="submit" value="Ask"/>
+        </form>
+    </article>
+{% endblock %}

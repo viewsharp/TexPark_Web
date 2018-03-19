@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <h1>Questions</h1>
+    {% for quest in object_list %}
+        <article>
+            <a href="/question/id{{ quest.pk }}"><h2>{{ quest.title }}</h2></a>
+            <p>{{ quest.text }}</p>
+            <p>Tags:
+                {% for tag in quest.tags.all %}
+                    <a href="#">{{ tag.title }}</a>
+                {% empty %}
+                    <span>no tags</span>
+                {% endfor %}
+            </p>
+        </article>
+    {% empty %}
+        <article>No articles yet.</article>
+    {% endfor %}
+{% endblock %}

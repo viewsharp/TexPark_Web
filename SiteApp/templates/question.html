@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container">
+        <article class="row">
+            <div class="col-auto">
+                <div class="quest__avatar" style="background-image: url('/{{ quest.author.avatar }}')"></div>
+                <div class="quest__points">
+                    <div class="quest__points-count">{{ points }}</div>
+                    <div class="quest__up-down">
+                        <img class="quest__like" src="{% static "img/icon-up.png" %}" alt="">
+                        <img class="quest__dislike" src="{% static "img/icon-down.png" %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h2>{{ quest.title }}</h2>
+                <p>{{ quest.text }}</p>
+                <p>Tags:
+                    {% for tag in quest.tags.all %}
+                        <a href="#">{{ tag.title }}</a>
+                    {% empty %}
+                        <span>no tags</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </article>
+        <hr>
+        {% for answer in answers %}
+            <article>
+                {{ answer.text }}
+            </article>
+        {% empty %}
+            <span>No answers</span>
+        {% endfor %}
+        <hr>
+        <article class="row">
+            <form action="" method="post" class="col">
+                {% csrf_token %}
+                <p>{{ answer_form.text }}</p>
+                <input type="submit" value="Answer"/>
+            </form>
+        </article>
+    </div>
+{% endblock %}

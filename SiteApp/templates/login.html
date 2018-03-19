@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <h2 class="mb-3">Log in</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table class="mb-3 login-table">{{ form.as_table }}</table>
+        <input class="mb-3" type="submit" value="Log in"/>
+    </form>
+    <a class="mb-3" href="">create new account</a>
+{% endblock %}
