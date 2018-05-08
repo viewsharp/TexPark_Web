@@ -19,6 +19,9 @@ class LikeAbleModel(models.Model):
         self.likes.remove(user)
         self.dislikes.add(user)
 
+    # class Meta:
+        # abstract = True
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=32, null=False)
@@ -30,6 +33,7 @@ class Quest(LikeAbleModel):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag)
     date = models.DateField(auto_now=True)
+    # correct_answer = models.ForeignKey(Answer, on_delete=models.SET_NULL, default=None)
 
 
 class Answer(LikeAbleModel):
