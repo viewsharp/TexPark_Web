@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=64, null=False)
-    avatar = models.ImageField(upload_to='static/user/images', null=False)
+    avatar = models.ImageField(upload_to='media/images/user-avatar', null=False)
 
 
 class LikeAbleModel(models.Model):
@@ -33,7 +33,10 @@ class Quest(LikeAbleModel):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag)
     date = models.DateField(auto_now=True)
-    # correct_answer = models.ForeignKey(Answer, on_delete=models.SET_NULL, default=None)
+    correct_answer = models.ForeignKey('Answer', on_delete=models.SET_NULL, default=None)
+
+    class Meta:
+        abstract = True
 
 
 class Answer(LikeAbleModel):

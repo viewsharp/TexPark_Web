@@ -104,3 +104,6 @@ ENV/
 *.cnf
 
 .idea
+env
+media
+*/migrations
