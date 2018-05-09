@@ -10,3 +10,14 @@
 - Домашнее задание 6 ([Markdown](/ziontab/tp-tasks/blob/master/files/markdown/task-6.md),<!-- [HTML](files/html/task-6.html),--> [PDF](files/pdf/task-6.pdf))
 - Домашнее задание 7 ([Markdown](/ziontab/tp-tasks/blob/master/files/markdown/task-7.md),<!-- [HTML](files/html/task-7.html),--> [PDF](files/pdf/task-7.pdf))
 
+# Installation
+
+## Build python interpreter
+./build
+
+## Edit db.cnf
+nano db.cnf
+
+## DB migrations
+./venv/bin/python manage.py makemigrations SiteApp
+./venv/bin/python manage.py migrate

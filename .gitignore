@@ -106,4 +106,5 @@ ENV/
 .idea
 env
 media
+db.cnf
 */migrations
