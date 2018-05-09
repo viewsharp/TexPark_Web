@@ -13,11 +13,11 @@
 # Installation
 
 ## Build python interpreter
-./build
+- ./build
 
 ## Edit db.cnf
-nano db.cnf
+- nano db.cnf
 
 ## DB migrations
-./venv/bin/python manage.py makemigrations SiteApp
-./venv/bin/python manage.py migrate
+- ./venv/bin/python manage.py makemigrations SiteApp
+- ./venv/bin/python manage.py migrate
