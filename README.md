@@ -5,6 +5,14 @@
 
 # Installation
 
+## Must be installed
+- python3
+- pip3
+- virtualenv
+- libmysqlclient-dev
+- mysql-client
+- libmemcached-dev
+
 ## Build python interpreter
 - ./build
 
