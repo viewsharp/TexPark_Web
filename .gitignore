@@ -108,3 +108,5 @@ env
 media
 db.cnf
 */migrations
+*/media
+*/admin
