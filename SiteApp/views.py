@@ -7,6 +7,11 @@ from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.contrib.auth import logout, authenticate, login
 from .forms import *
 from re import split as resplit
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+
+popular_tags = Tag.objects.all()[:20]
+best_members = User.objects.all()[:20]
 
 
 class QuestionCreate(CreateView):
@@ -36,6 +41,43 @@ class QuestionCreate(CreateView):
 class QuestionList(ListView):
     model = Quest
     template_name = 'question_list.html'
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['popular_tags'] = popular_tags
+        context['best_members'] = best_members
+        return context
+
+
+class HotQuestionList(ListView):
+    model = Quest
+    template_name = 'question_list.html'
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['popular_tags'] = popular_tags
+        context['best_members'] = best_members
+
+        object_list = self.model.objects.all()
+        object_list = sorted(object_list, key=lambda x: x.get_rating(), reverse=True)
+        paginator = Paginator(object_list, self.paginate_by)
+        context['paginator'] = paginator
+        context['hot_questions'] = True
+        page_number = context['view'].request.GET.get('page')
+
+        try:
+            object_list = paginator.page(page_number)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            object_list = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            object_list = paginator.page(paginator.num_pages)
+
+        context['object_list'] = object_list
+        return context
 
 
 class Question(DetailView):
@@ -45,10 +87,11 @@ class Question(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['popular_tags'] = popular_tags
+        context['best_members'] = best_members
+
         context['answer_form'] = self.form_class
         context['answers'] = Answer.objects.filter(question_id=self.kwargs['pk'])
-        obj = context['quest']
-        context['points'] = obj.likes.count() - obj.dislikes.count()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -90,14 +133,6 @@ class Settings(UpdateView):
     fields = ['email', 'nickname', 'avatar']
     template_name = 'user_update.html'
     success_url = '/'
-
-    def get(self, request, *args, **kwargs):
-        self.kwargs[self.pk_url_kwarg] = request.user.pk
-        return super(Settings, self).get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        self.kwargs[self.pk_url_kwarg] = request.user.pk
-        return super(Settings, self).post(request, *args, **kwargs)
 
 
 def logout_view(request):

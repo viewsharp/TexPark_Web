@@ -62,6 +62,7 @@ class Command(BaseCommand):
             last_name = name[1]
             user = User.objects.create_user(
                 username=fake_profile['username'],
+                nickname=fake_profile['username'],
                 first_name=first_name,
                 last_name=last_name,
                 email=fake_profile['mail'],

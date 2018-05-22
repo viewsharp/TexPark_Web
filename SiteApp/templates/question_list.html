@@ -2,20 +2,68 @@
 {% load static %}
 
 {% block body %}
-    <h1>Questions</h1>
+    {% if not hot_questions %}
+        <h1 class="d-inline-block mr-4">New questions</h1>
+        <a  class="d-inline-block" href="{% url 'hot-questions' %}"><h2>Hot questions</h2></a>
+    {% else %}
+        <h1 class="d-inline-block mr-4">Hot questions</h1>
+        <a  class="d-inline-block" href="{% url 'home' %}"><h2>New questions</h2></a>
+    {% endif %}
     {% for quest in object_list %}
-        <article>
-            <a href="/question/id{{ quest.pk }}"><h2>{{ quest.title }}</h2></a>
-            <p>{{ quest.text }}</p>
-            <p>Tags:
-                {% for tag in quest.tags.all %}
-                    <a href="#">{{ tag.title }}</a>
-                {% empty %}
-                    <span>no tags</span>
-                {% endfor %}
-            </p>
+        <article class="row">
+            <div class="col-auto">
+                <div class="quest__avatar" style="background-image: url('/{{ quest.author.avatar }}')"></div>
+                <div class="quest__points">{{ quest.get_rating }}
+                </div>
+            </div>
+            <div class="col">
+                <a href="/question/id{{ quest.pk }}"><h2>{{ quest.title }}</h2></a>
+                <p class="quest__text-small">{{ quest.text }}</p>
+                <p>Tags:
+                    {% for tag in quest.tags.all %}
+                        <a href="#">{{ tag.title }}</a>
+                    {% empty %}
+                        <span>no tags</span>
+                    {% endfor %}
+                </p>
+            </div>
         </article>
+{#        <article>#}
+{#            <a href="/question/id{{ quest.pk }}"><h2>{{ quest.title }}</h2></a>#}
+{#            <p class="question-text">{{ quest.text }}</p>#}
+{#            <p>Tags:#}
+{#                {% for tag in quest.tags.all %}#}
+{#                    <a href="#">{{ tag.title }}</a>#}
+{#                {% empty %}#}
+{#                    <span>no tags</span>#}
+{#                {% endfor %}#}
+{#            </p>#}
+{#        </article>#}
     {% empty %}
         <article>No articles yet.</article>
     {% endfor %}
+
+    {% if page_obj.number != 1 and page_obj.number != 2 %}
+        <a href="?page=1">1</a>
+    {% endif %}
+    {% if page_obj.previous_page_number > 2 %}
+        ...
+    {% endif %}
+
+
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+    {% endif %}
+    <span class="page-current">{{ page_obj.number }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+    {% endif %}
+
+    {% if page_obj.next_page_number < page_obj.paginator.num_pages|add:-1 %}
+        ...
+    {% endif %}
+    {% if page_obj.number != page_obj.paginator.num_pages and page_obj.number < page_obj.paginator.num_pages|add:-1 %}
+        <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+    {% endif %}
+
 {% endblock %}

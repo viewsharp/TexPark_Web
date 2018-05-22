@@ -63,10 +63,18 @@
             {% endblock %}
         </section>
         <aside class="col-lg">
-            <h3>Popular tags</h3>
-            <div></div>
-            <h3>Best Members</h3>
-            <div></div>
+            <div>
+                <h3>Popular tags</h3>
+                {% for tag in popular_tags %}
+                    <a href="#">{{ tag.title }}</a>
+                {% endfor %}
+            </div>
+            <div>
+                <h3>Best Members</h3>
+                {% for member in best_members %}
+                    <a href="#">{{ member.nickname }}</a>
+                {% endfor %}
+            </div>
         </aside>
     </div>
 </div>

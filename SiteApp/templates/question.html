@@ -7,11 +7,9 @@
             <div class="col-auto">
                 <div class="quest__avatar" style="background-image: url('/{{ quest.author.avatar }}')"></div>
                 <div class="quest__points">
-                    <div class="quest__points-count">{{ points }}</div>
-                    <div class="quest__up-down">
-                        <img class="quest__like" src="{% static "img/icon-up.png" %}" alt="">
-                        <img class="quest__dislike" src="{% static "img/icon-down.png" %}" alt="">
-                    </div>
+                    <img class="quest__points__like" src="{% static "img/icon-up.png" %}" alt="">
+                    <div class="quest__points__count">{{ quest.get_rating }}</div>
+                    <img class="quest__points__dislike" src="{% static "img/icon-down.png" %}" alt="">
                 </div>
             </div>
             <div class="col">
@@ -28,8 +26,23 @@
         </article>
         <hr>
         {% for answer in answers %}
-            <article>
-                {{ answer.text }}
+            <article class="row answer">
+
+                <div class="col-auto">
+                    <div class="answer__avatar" style="background-image: url('/{{ answer.author.avatar }}')"></div>
+                    <div class="answer__points">
+                        <img class="answer__points__like" src="{% static "img/icon-up.png" %}" alt="">
+                        <div class="answer__points__count">{{ answer.get_rating }}</div>
+                        <img class="answer__points__dislike" src="{% static "img/icon-down.png" %}" alt="">
+                    </div>
+                </div>
+                <div class="col">
+                    <p>{{ answer.text }}</p>
+                    <div class="answer__correct">
+                        <label class="answer__correct__label" for="correct">Correct</label>
+                        <input class="answer__correct__checkbox" type="checkbox" name="correct">
+                    </div>
+                </div>
             </article>
         {% empty %}
             <span>No answers</span>

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=64, null=False)
-    avatar = models.ImageField(upload_to='media/images/user-avatar', default='static/img/default-avatar.jpg')
+    avatar = models.ImageField(upload_to='static/media/images/user-avatar', default='static/img/default-avatar.jpg')
 
 
 class LikeAbleModel(models.Model):
@@ -18,6 +18,9 @@ class LikeAbleModel(models.Model):
     def dislike(self, user):
         self.likes.remove(user)
         self.dislikes.add(user)
+
+    def get_rating(self):
+        return self.likes.count() - self.dislikes.count()
 
 
 class Tag(models.Model):

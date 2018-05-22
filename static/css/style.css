@@ -16,6 +16,7 @@ ul {
     font-size: 10pt;
     padding: 3px 10px;
     margin-left: 20px;
+    margin-bottom: 4px;
     border: 1px solid #f5c6cb;
     border-radius: .25rem;
     float: right;
@@ -30,7 +31,7 @@ ul {
 .user-tab__avatar {
     width: 48px;
     height: 48px;
-    border-radius: .25rem;
+    border-radius: .5rem;
     background-size: cover;
     display: inline-block;
     margin: 0 8px;
@@ -65,35 +66,106 @@ ul {
 }
 
 .quest__points {
-    margin: 14px;
+    margin: 14px 0;
     border: 1px solid #dddddd;
-    padding: 0 6px;
     border-radius: 4px;
-}
+    padding: 0 2px;
 
-.quest__points-count {
     font-size: 16pt;
+    text-align: center;
+
+}
+
+.quest__points__count {
+    /*font-size: 16pt;*/
+    min-width: 32px;
+    text-align: center;
+
+    display: inline-block;
+    vertical-align: top;
+    margin-right: -4px;
+}
+
+.quest__points__like {
+    width: 16px;
+    padding-top: 6px;
+
+    display: inline-block;
+    vertical-align: top;
+    margin-right: -4px;
+}
+
+.quest__points__dislike {
+    width: 16px;
+    padding-top: 6px;
+
     display: inline-block;
     vertical-align: top;
 }
 
-.quest__up-down {
+.answer {
+    padding-bottom: 32px;
+}
+
+.answer__avatar {
+    width: 72px;
+    height: 72px;
+    background-size: cover;
+    border-radius: 0.5em;
+}
+
+.answer__points {
+    margin: 14px 0;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 0 2px;
+
+    font-size: 16pt;
+    text-align: center;
+
+}
+
+.answer__points__count {
+    /*font-size: 16pt;*/
+    min-width: 32px;
+    text-align: center;
+
     display: inline-block;
     vertical-align: top;
+    margin-right: -4px;
 }
 
-.quest__like {
+.answer__points__like {
     width: 16px;
-    display: block;
+    padding-top: 6px;
+
+    display: inline-block;
+    vertical-align: top;
+    margin-right: -4px;
 }
 
-.quest__dislike {
+.answer__points__dislike {
     width: 16px;
-    display: block;
+    padding-top: 6px;
 
+    display: inline-block;
+    vertical-align: top;
 }
 
 .answer-textfield {
     width: 100%;
     height: 200px;
+}
+
+.quest__text-small {
+    max-height: 120px;
+    overflow-y: hidden;
+}
+
+.answer__correct__checkbox {
+    margin: 2px;
+}
+
+.answer__correct__label {
+    font-weight: bold;
 }
