@@ -9,7 +9,6 @@ from .forms import *
 from re import split as resplit
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
-
 popular_tags = Tag.objects.all()[:20]
 best_members = User.objects.all()[:20]
 
@@ -41,42 +40,82 @@ class QuestionCreate(CreateView):
 class QuestionList(ListView):
     model = Quest
     template_name = 'question_list.html'
-    paginate_by = 20
+    custom_paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        # context = super().get_context_data(**kwargs)
+        context = {}
         context['popular_tags'] = popular_tags
         context['best_members'] = best_members
+
+        # object_list = context['object_list']
+
+        tag = self.request.GET.get('tag')
+        member = self.request.GET.get('member')
+        if tag:
+            try:
+                object_list = Quest.objects.filter(tags__id=int(tag))
+            except Exception:
+                object_list = Quest.objects.all()
+        elif member:
+            try:
+                author = User.objects.get(pk=int(member))
+            except Exception:
+                object_list = Quest.objects.all()
+            else:
+                object_list = Quest.objects.filter(author=author)
+        else:
+            object_list = Quest.objects.all()
+
+        object_list = sorted(object_list, key=lambda x: x.id, reverse=True)
+        paginator = Paginator(object_list, self.custom_paginate_by)
+        context['paginator'] = paginator
+        context['is_paginated'] = True
+
+        page_number = self.request.GET.get('page')
+        try:
+            page_obj = paginator.page(page_number)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            page_obj = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            page_obj = paginator.page(paginator.num_pages)
+
+        context['page_obj'] = page_obj
+        context['object_list'] = page_obj.object_list
         return context
 
 
 class HotQuestionList(ListView):
     model = Quest
     template_name = 'question_list.html'
-    paginate_by = 20
+    custom_paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['popular_tags'] = popular_tags
         context['best_members'] = best_members
 
-        object_list = self.model.objects.all()
-        object_list = sorted(object_list, key=lambda x: x.get_rating(), reverse=True)
-        paginator = Paginator(object_list, self.paginate_by)
+        object_list = sorted(context['object_list'], key=lambda x: x.get_rating(), reverse=True)
+        paginator = Paginator(object_list, self.custom_paginate_by)
         context['paginator'] = paginator
+        context['is_paginated'] = True
         context['hot_questions'] = True
-        page_number = context['view'].request.GET.get('page')
 
+        page_number = self.request.GET.get('page')
         try:
-            object_list = paginator.page(page_number)
+            page_obj = paginator.page(page_number)
         except PageNotAnInteger:
             # If page is not an integer, deliver first page.
-            object_list = paginator.page(1)
+            page_obj = paginator.page(1)
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
-            object_list = paginator.page(paginator.num_pages)
+            page_obj = paginator.page(paginator.num_pages)
 
-        context['object_list'] = object_list
+        context['page_obj'] = page_obj
+
+        context['object_list'] = page_obj.object_list
         return context
 
 

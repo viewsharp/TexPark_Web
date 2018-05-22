@@ -9,7 +9,7 @@
         <h1 class="d-inline-block mr-4">Hot questions</h1>
         <a  class="d-inline-block" href="{% url 'home' %}"><h2>New questions</h2></a>
     {% endif %}
-    {% for quest in object_list %}
+    {% for quest in page_obj %}
         <article class="row">
             <div class="col-auto">
                 <div class="quest__avatar" style="background-image: url('/{{ quest.author.avatar }}')"></div>
@@ -28,17 +28,6 @@
                 </p>
             </div>
         </article>
-{#        <article>#}
-{#            <a href="/question/id{{ quest.pk }}"><h2>{{ quest.title }}</h2></a>#}
-{#            <p class="question-text">{{ quest.text }}</p>#}
-{#            <p>Tags:#}
-{#                {% for tag in quest.tags.all %}#}
-{#                    <a href="#">{{ tag.title }}</a>#}
-{#                {% empty %}#}
-{#                    <span>no tags</span>#}
-{#                {% endfor %}#}
-{#            </p>#}
-{#        </article>#}
     {% empty %}
         <article>No articles yet.</article>
     {% endfor %}

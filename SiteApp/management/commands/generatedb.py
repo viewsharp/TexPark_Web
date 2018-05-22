@@ -16,13 +16,14 @@ def print_progress_bar(iteration, total, prefix = '', suffix = '', decimals = 1,
         length      - Optional  : character length of bar (Int)
         fill        - Optional  : bar fill character (Str)
     """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filled_length = int(length * iteration // total)
-    bar = fill * filled_length + '-' * (length - filled_length)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
-    # Print New Line on Complete
-    if iteration == total:
-        print()
+    # percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    # filled_length = int(length * iteration // total)
+    # bar = fill * filled_length + '-' * (length - filled_length)
+    # print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
+    # # Print New Line on Complete
+    # if iteration == total:
+    #     print()
+    pass
 
 
 class Command(BaseCommand):
@@ -84,7 +85,7 @@ class Command(BaseCommand):
             question = Quest.objects.create(
                 author=choice_random(users),
                 title=cls.fake.sentence(),
-                text=cls.fake.text(max_nb_chars=2560)
+                text=cls.fake.text(max_nb_chars=1280)
             )
             for _ in range(randint(2, 6)):
                 question.tags.add(choice_random(tags))
@@ -104,7 +105,7 @@ class Command(BaseCommand):
             answer = Answer.objects.create(
                 question=choice_random(questions),
                 author=choice_random(users),
-                text=cls.fake.text(max_nb_chars=randint(256, 2560))
+                text=cls.fake.text(max_nb_chars=randint(128, 640))
             )
             answer.save()
             answers.append(answer)
